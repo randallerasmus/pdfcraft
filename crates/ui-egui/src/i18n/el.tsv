@@ -2362,3 +2362,26 @@ animation effects	Off	Ανενεργά
 	This document is trying to open a local file:	Αυτό το έγγραφο προσπαθεί να ανοίξει ένα τοπικό αρχείο:
 	Move tag earlier	Μετακίνηση ετικέτας νωρίτερα
 	Move tag later	Μετακίνηση ετικέτας αργότερα
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Ανάγνωση αυτής της σελίδας φωναχτά
+	Read to end of document	Ανάγνωση μέχρι το τέλος του εγγράφου
+	Pause or resume reading	Παύση ή συνέχιση ανάγνωσης
+	Stop reading	Διακοπή ανάγνωσης
+	Save as audio…	Αποθήκευση ως ήχος…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Αυτό το σύστημα δεν διαθέτει μηχανή ομιλίας. Σε Linux και FreeBSD, εγκαταστήστε το espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Αυτή η σελίδα δεν έχει κείμενο για ανάγνωση. Αναγνωρίστε πρώτα το κείμενο (OCR).
+	Read Out Loud stopped: {e}	Η ανάγνωση φωναχτά διακόπηκε: {e}
+	Pause ({key})	Παύση ({key})
+	Resume ({key})	Συνέχιση ({key})
+	Stop reading ({key})	Διακοπή ανάγνωσης ({key})
+	Reading page {n} of {total}	Ανάγνωση σελίδας {n} από {total}
+	Paused on page {n} of {total}	Σε παύση στη σελίδα {n} από {total}
+	Speed	Ταχύτητα
+	Voice	Φωνή
+	System voice	Φωνή συστήματος
+	Saving audio…	Αποθήκευση ήχου…
+	This speech engine can't save audio. Install espeak-ng.	Αυτή η μηχανή ομιλίας δεν μπορεί να αποθηκεύσει ήχο. Εγκαταστήστε το espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Καμία από αυτές τις σελίδες δεν έχει κείμενο για ανάγνωση. Αναγνωρίστε πρώτα το κείμενο (OCR).
+	Couldn't save audio: {e}	Δεν ήταν δυνατή η αποθήκευση του ήχου: {e}
+	Saved audio to {path}	Ο ήχος αποθηκεύτηκε στο {path}

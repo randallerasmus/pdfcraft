@@ -260,6 +260,10 @@ impl PdfCraftApp {
                 }
             }
             "view.read_mode" => self.switch_mode(if self.mode == Mode::Read { Mode::AllTools } else { Mode::Read }, false),
+            "view.read_aloud.page" => self.read_aloud(crate::speech_ui::Scope::Page),
+            "view.read_aloud.to_end" => self.read_aloud(crate::speech_ui::Scope::ToEnd),
+            "view.read_aloud.pause" => self.read_aloud_pause(),
+            "view.read_aloud.stop" => self.read_aloud_stop(),
             "view.theme" => {
                 let next = if self.theme == ThemeKind::Light { ThemePreference::Dark } else { ThemePreference::Light };
                 self.set_theme_preference(next);
@@ -369,6 +373,7 @@ impl PdfCraftApp {
             }
             "export.image" => self.dialog = Some(Dialog::Export(crate::export_ui::ExportKind::Image)),
             "export.text" => self.dialog = Some(Dialog::Export(crate::export_ui::ExportKind::Text)),
+            "export.audio" => self.save_as_audio(),
             "a11y.check" => self.start_accessibility_check(),
             "ocr.recognize" => self.dialog = Some(Dialog::RecognizeText),
             "tools.js_console" => self.dialog = Some(Dialog::JsConsole),

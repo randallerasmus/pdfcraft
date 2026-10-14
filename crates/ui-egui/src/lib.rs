@@ -54,6 +54,7 @@ mod ocr_ui;
 mod optimize_ui;
 mod search_ui;
 mod sign_ui;
+mod speech_ui;
 mod stamps_ui;
 mod standards_ui;
 mod zoom_snap;
@@ -518,6 +519,8 @@ pub struct PdfCraftApp {
     desktop_theme_enabled: bool,
     /// How far a mouse-wheel notch scrolls.
     pub scroll_speed: scroll_speed::ScrollSpeed,
+    /// Read Out Loud: its voice and speed, and the reading under way.
+    pub(crate) read_aloud: speech_ui::ReadAloud,
     /// Preferences ▸ Animation effects: on, off, or as the system's animation setting says.
     pub animation_effects: motion::AnimationEffects,
     /// Whether the system asked for no animations, and how the desktop app asks it.
@@ -887,6 +890,7 @@ impl PdfCraftApp {
             #[cfg(target_os = "linux")]
             desktop_theme_enabled: false,
             scroll_speed: scroll_speed::ScrollSpeed::default(),
+            read_aloud: speech_ui::ReadAloud::default(),
             animation_effects: motion::AnimationEffects::default(),
             motion: motion::Motion::default(),
             language: i18n::AUTO.to_string(),
@@ -2082,7 +2086,7 @@ impl PdfCraftApp {
     /// Serialize the user's persistent state (recent files, theme). Local only.
     pub fn persist(&self) -> String {
         let trusted: Vec<String> = self.session.trusted_certificates().iter().map(pdfcraft_engine::sign::x509::to_pem).collect();
-        serde_json::json!({
+        let mut state = serde_json::json!({
             "docking": self.docking,
             "docking_left_open": self.left_open,
             "docking_right": self.right,
@@ -2141,8 +2145,10 @@ impl PdfCraftApp {
             "combine_zoom": self.combine_zoom,
             "comments_panel_closed": self.comments_panel_closed,
             "right_panel_closed": self.right_panel_closed,
-        })
-        .to_string()
+        });
+        // Outside the literal above, which is at serde_json's macro recursion limit.
+        state["read_aloud"] = self.read_aloud.persist();
+        state.to_string()
     }
 
     /// Restore state written by `persist`. Unknown or malformed data is ignored.
@@ -2184,6 +2190,7 @@ impl PdfCraftApp {
         if let Ok(preference) = serde_json::from_value::<ThemePreference>(v["theme"].clone()) {
             self.set_theme_preference(preference);
         }
+        self.read_aloud.restore(&v["read_aloud"]);
         if let Ok(speed) = serde_json::from_value::<scroll_speed::ScrollSpeed>(v["scroll_speed"].clone()) {
             self.scroll_speed = speed;
         }
@@ -2894,6 +2901,7 @@ impl eframe::App for PdfCraftApp {
             }
         }
         self.poll_export();
+        self.poll_read_aloud();
         self.poll_ocr();
         self.poll_optimize();
         self.poll_action();
@@ -2977,6 +2985,7 @@ impl eframe::App for PdfCraftApp {
         self.process_pending_edits();
         palette::show(self, &ctx);
         dialogs::show(self, &ctx);
+        self.read_aloud_bar(&ctx);
         self.show_progress(&ctx);
         widgets::toast(self, &ctx);
         self.finish_render_frame(&ctx);

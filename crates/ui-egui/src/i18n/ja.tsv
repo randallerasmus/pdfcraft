@@ -2352,3 +2352,26 @@ animation effects	Off	オフ
 	This document is trying to open a local file:	この文書はローカルファイルを開こうとしています：
 	Move tag earlier	タグを前へ移動
 	Move tag later	タグを後へ移動
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	このページを読み上げる
+	Read to end of document	文書の最後まで読み上げる
+	Pause or resume reading	読み上げを一時停止または再開
+	Stop reading	読み上げを停止
+	Save as audio…	オーディオとして保存…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	このシステムには音声エンジンがありません。Linux と FreeBSD では espeak-ng をインストールしてください。
+	This page has no text to read. Recognize text (OCR) first.	このページには読み上げるテキストがありません。先に OCR でテキストを認識してください。
+	Read Out Loud stopped: {e}	読み上げを停止しました: {e}
+	Pause ({key})	一時停止（{key}）
+	Resume ({key})	再開（{key}）
+	Stop reading ({key})	読み上げを停止（{key}）
+	Reading page {n} of {total}	{total} ページ中 {n} ページ目を読み上げ中
+	Paused on page {n} of {total}	{total} ページ中 {n} ページ目で一時停止中
+	Speed	速度
+	Voice	音声
+	System voice	システムの音声
+	Saving audio…	オーディオを保存しています…
+	This speech engine can't save audio. Install espeak-ng.	この音声エンジンはオーディオを保存できません。espeak-ng をインストールしてください。
+	None of these pages has text to read. Recognize text (OCR) first.	これらのページには読み上げるテキストがありません。先に OCR でテキストを認識してください。
+	Couldn't save audio: {e}	オーディオを保存できませんでした: {e}
+	Saved audio to {path}	オーディオを {path} に保存しました

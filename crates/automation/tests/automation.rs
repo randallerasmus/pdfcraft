@@ -1559,13 +1559,14 @@ fn protecting_through_tools() {
         ("doc_export_images", json!({ "doc": re, "folder": "pages" })),
         ("doc_export_all_images", json!({ "doc": re, "folder": "images" })),
         ("doc_export_office", json!({ "doc": re, "path": "out.docx" })),
+        ("doc_export_audio", json!({ "doc": re, "path": "out.wav" })),
     ] {
         match b.call(tool, &args) {
             Err(ToolError::Failed(m)) => assert!(m.contains("don't allow copying"), "{tool}: {m}"),
             other => panic!("{tool} is refused: {other:?}"),
         }
     }
-    assert!(!dir.join("out.txt").exists() && !dir.join("pages").exists() && !dir.join("out.docx").exists());
+    assert!(!dir.join("out.txt").exists() && !dir.join("pages").exists() && !dir.join("out.docx").exists() && !dir.join("out.wav").exists());
     assert_eq!(ok(&mut b, "text_find", json!({ "doc": re, "query": "Page" }))["count"], 3);
     // With the permissions password everything is possible, including removing security.
     let owner = ok(&mut b, "doc_open", json!({ "path": "locked.pdf", "password": "boss" }))["doc"].as_u64().unwrap();

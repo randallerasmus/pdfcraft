@@ -2426,3 +2426,26 @@ animation effects	Off	Vypnuto
 	This document is trying to open a local file:	Tento dokument se pokouší otevřít místní soubor:
 	Move tag earlier	Přesunout značku dříve
 	Move tag later	Přesunout značku později
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Přečíst tuto stránku nahlas
+	Read to end of document	Číst až do konce dokumentu
+	Pause or resume reading	Pozastavit nebo obnovit čtení
+	Stop reading	Zastavit čtení
+	Save as audio…	Uložit jako zvuk…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Tento systém nemá řečový modul. V Linuxu a FreeBSD nainstalujte espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Na této stránce není žádný text ke čtení. Nejprve rozpoznejte text (OCR).
+	Read Out Loud stopped: {e}	Předčítání bylo zastaveno: {e}
+	Pause ({key})	Pozastavit ({key})
+	Resume ({key})	Pokračovat ({key})
+	Stop reading ({key})	Zastavit čtení ({key})
+	Reading page {n} of {total}	Čte se stránka {n} z {total}
+	Paused on page {n} of {total}	Pozastaveno na stránce {n} z {total}
+	Speed	Rychlost
+	Voice	Hlas
+	System voice	Systémový hlas
+	Saving audio…	Ukládání zvuku…
+	This speech engine can't save audio. Install espeak-ng.	Tento řečový modul neumí ukládat zvuk. Nainstalujte espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Žádná z těchto stránek nemá text ke čtení. Nejprve rozpoznejte text (OCR).
+	Couldn't save audio: {e}	Zvuk nelze uložit: {e}
+	Saved audio to {path}	Zvuk uložen do {path}

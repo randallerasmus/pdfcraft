@@ -9053,11 +9053,11 @@ title = "Read out loud (platform TTS)"
 area = "M"
 tier = "P2"
 milestone = "M12"
-status = "planned"
-commands = []
-tools = []
-evidence = []
-notes = ""
+status = "shipped"
+commands = ["view.read_aloud.page", "view.read_aloud.to_end", "view.read_aloud.pause", "view.read_aloud.stop", "export.audio"]
+tools = ["doc_export_audio", "speech_voices"]
+evidence = ["crates/platform/src/speech.rs::chunks_are_sentences_with_lines_joined", "crates/platform/src/speech.rs::document_text_never_reaches_a_command_line_except_as_one_argument", "crates/platform/src/speech.rs::records_a_wav_with_the_system_engine", "crates/ui-egui/src/speech_ui.rs::reading_to_the_end_turns_to_the_page_being_read_and_reports_a_failing_engine", "crates/ui-egui/src/speech_ui.rs::a_page_without_text_is_reported", "crates/automation/src/lib.rs::audio_export_reads_pages_in_order_into_a_staged_file", "crates/automation/src/lib.rs::audio_export_stays_inside_the_root_and_never_starts_the_engine_outside_it"]
+notes = "View ▸ Read this page aloud, Read to end of document (⇧⌘B), Pause or resume reading (⇧⌘Y) and Stop reading (⇧⌘E), through the system's own speech engine: Windows System.Speech (via PowerShell), macOS `say`, eSpeak NG or Speech Dispatcher on Linux and FreeBSD. Reads a sentence at a time in text-extraction order, turns to the page being read and says when a page has no text (OCR first). Beyond Acrobat: File ▸ Save as audio… and doc_export_audio write the same speech to a WAV file (needs copy permission; reading aloud doesn't). Missing: no highlight of the sentence being read; reads the text layer's order, not the tag tree's reading order; no engine in the web build (Web Speech API); ⇧⌘V and ⇧⌘C can't be bound (egui turns them into Paste and Copy), so Read this page has no key; pausing restarts the current sentence; a running Save as audio can't be cancelled; only the Windows engine has been run for real (macOS and Linux are covered by argument and parser tests)."
 
 [[feature]]
 id = "a11y.read-aloud-options"
@@ -9065,11 +9065,11 @@ title = "Read-aloud voice, pitch and speed"
 area = "M"
 tier = "P2"
 milestone = "M12"
-status = "planned"
+status = "partial"
 commands = []
-tools = []
-evidence = []
-notes = ""
+tools = ["speech_voices", "doc_export_audio"]
+evidence = ["crates/ui-egui/src/speech_ui.rs::saved_settings_are_restored_within_range", "crates/platform/src/speech.rs::rates_map_to_each_engines_scale"]
+notes = "The reading bar picks the voice (any the system engine lists) and the speed (0.75–2×), both remembered between sessions; changing either restarts the current sentence. Missing: pitch and volume controls, and a Preferences ▸ Reading page for them."
 
 [[feature]]
 id = "a11y.replace-page-colors"

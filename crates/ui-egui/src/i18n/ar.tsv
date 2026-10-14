@@ -2373,3 +2373,26 @@ animation effects	Off	معطّلة
 	This document is trying to open a local file:	يحاول هذا المستند فتح ملف محلي:
 	Move tag earlier	نقل العلامة للأعلى
 	Move tag later	نقل العلامة للأسفل
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	قراءة هذه الصفحة بصوت عالٍ
+	Read to end of document	القراءة حتى نهاية المستند
+	Pause or resume reading	إيقاف القراءة مؤقتًا أو استئنافها
+	Stop reading	إيقاف القراءة
+	Save as audio…	حفظ كملف صوتي…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	لا يحتوي هذا النظام على محرك كلام. على Linux وFreeBSD، ثبّت espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	لا تحتوي هذه الصفحة على نص للقراءة. استخدم التعرف على النص (OCR) أولًا.
+	Read Out Loud stopped: {e}	توقفت القراءة بصوت عالٍ: {e}
+	Pause ({key})	إيقاف مؤقت ({key})
+	Resume ({key})	استئناف ({key})
+	Stop reading ({key})	إيقاف القراءة ({key})
+	Reading page {n} of {total}	قراءة الصفحة {n} من {total}
+	Paused on page {n} of {total}	متوقف مؤقتًا عند الصفحة {n} من {total}
+	Speed	السرعة
+	Voice	الصوت
+	System voice	صوت النظام
+	Saving audio…	جارٍ حفظ الصوت…
+	This speech engine can't save audio. Install espeak-ng.	لا يستطيع محرك الكلام هذا حفظ الصوت. ثبّت espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	لا تحتوي أي من هذه الصفحات على نص للقراءة. استخدم التعرف على النص (OCR) أولًا.
+	Couldn't save audio: {e}	تعذّر حفظ الصوت: {e}
+	Saved audio to {path}	حُفظ الصوت في {path}

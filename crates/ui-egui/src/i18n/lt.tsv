@@ -2596,3 +2596,26 @@ key	Space	Tarpas
 	This document is trying to open a local file:	Šis dokumentas bando atverti vietinį failą:
 	Move tag earlier	Perkelti žymą anksčiau
 	Move tag later	Perkelti žymą vėliau
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Perskaityti šį puslapį balsu
+	Read to end of document	Skaityti iki dokumento pabaigos
+	Pause or resume reading	Pristabdyti arba tęsti skaitymą
+	Stop reading	Stabdyti skaitymą
+	Save as audio…	Įrašyti kaip garsą…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Šioje sistemoje nėra kalbos sintezatoriaus. Linux ir FreeBSD sistemose įdiekite espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Šiame puslapyje nėra teksto, kurį būtų galima perskaityti. Pirmiausia atpažinkite tekstą (OCR).
+	Read Out Loud stopped: {e}	Skaitymas balsu sustabdytas: {e}
+	Pause ({key})	Pristabdyti ({key})
+	Resume ({key})	Tęsti ({key})
+	Stop reading ({key})	Stabdyti skaitymą ({key})
+	Reading page {n} of {total}	Skaitomas puslapis {n} iš {total}
+	Paused on page {n} of {total}	Pristabdyta ties puslapiu {n} iš {total}
+	Speed	Greitis
+	Voice	Balsas
+	System voice	Sistemos balsas
+	Saving audio…	Įrašomas garsas…
+	This speech engine can't save audio. Install espeak-ng.	Šis kalbos sintezatorius negali įrašyti garso. Įdiekite espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Nė viename iš šių puslapių nėra teksto, kurį būtų galima perskaityti. Pirmiausia atpažinkite tekstą (OCR).
+	Couldn't save audio: {e}	Nepavyko įrašyti garso: {e}
+	Saved audio to {path}	Garsas įrašytas į {path}

@@ -1,5 +1,6 @@
 # Where PdfCraft falls short of Acrobat Pro
 
+> **Last reviewed:** 2026-10-14 · **Last updated:** 2026-10-14 · **Change:** minor (gap 20: Read Out Loud ships through the system speech engines; estimates unchanged) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 > **Last reviewed:** 2026-10-12 · **Last updated:** 2026-10-12 · **Change:** minor (gap 6: #1398 stamps read upright on rotated pages; estimates unchanged) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 > **Last reviewed:** 2026-10-12 · **Last updated:** 2026-10-12 · **Change:** minor (gap 6: #1317, #1327, #1302, #1315 and #1340; estimates unchanged) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-12 · **Change:** minor (#1316: replacing a line keeps a neighbouring line whose glyph box overlaps; gap 3 remains) · **Target:** Adobe Acrobat Pro (Acrobat DC, continuous track 26.002.21931, macOS)
@@ -286,10 +287,11 @@ update the numbers.
   Documents and view, Identity, Fill & Sign, JavaScript.
 - **Estimate:** 15–25 h. **Doc:** [ui-parity.md](ui-parity.md).
 
-### 20. Scanners, GPU page rendering, pen pressure, Read Out Loud
+### 20. Scanners, GPU page rendering, pen pressure
 
 - **Missing:** TWAIN/WIA/ICA/SANE scanning; GPU-accelerated page rendering (pages are rasterized on
-  the CPU and uploaded); pressure-sensitive ink; platform text-to-speech.
+  the CPU and uploaded); pressure-sensitive ink. Read Out Loud now uses each system's speech engine;
+  it lacks sentence highlighting, tag-tree reading order and a web engine (`a11y.read-aloud`).
 - **Estimate:** 25–50 h; scanners need hardware. **Doc:** [hardware-parity.md](hardware-parity.md).
 
 ### 21. Compare: no side-by-side view or filters
@@ -324,6 +326,7 @@ update the numbers.
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-14 | minor | Gap 20: Read Out Loud (read page, read to end, pause, stop) through Windows System.Speech, macOS `say`, eSpeak NG or Speech Dispatcher, plus Save as audio to WAV; sentence highlighting, tag-tree order and a web engine remain. Estimates unchanged. |
 | 2026-10-12 | minor | Gap 6: rubber stamps, explicit image rectangles and PDF-page stamps read upright on rotated pages (#1398). Estimates unchanged. |
 | 2026-10-12 | minor | #1316: replacing a line or paragraph keeps a neighbouring line whose glyph box overlaps. Gap 3 remains. Estimates unchanged. |
 | 2026-10-12 | minor | Exclusive image crops resize with their pixels across nested states, intervening operators and content streams; shared clips remain fixed. Synthetic engine/tool regressions and private image save/reopen checks; estimates unchanged. |

@@ -2316,3 +2316,26 @@ animation effects	Off	关
 	This document is trying to open a local file:	此文档正尝试打开本地文件：
 	Move tag earlier	将标签前移
 	Move tag later	将标签后移
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	朗读此页
+	Read to end of document	朗读到文档末尾
+	Pause or resume reading	暂停或继续朗读
+	Stop reading	停止朗读
+	Save as audio…	另存为音频…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	此系统没有语音引擎。在 Linux 和 FreeBSD 上，请安装 espeak-ng。
+	This page has no text to read. Recognize text (OCR) first.	此页没有可朗读的文本。请先识别文本（OCR）。
+	Read Out Loud stopped: {e}	朗读已停止：{e}
+	Pause ({key})	暂停 ({key})
+	Resume ({key})	继续 ({key})
+	Stop reading ({key})	停止朗读 ({key})
+	Reading page {n} of {total}	正在朗读第 {n} 页，共 {total} 页
+	Paused on page {n} of {total}	已暂停于第 {n} 页，共 {total} 页
+	Speed	速度
+	Voice	语音
+	System voice	系统语音
+	Saving audio…	正在保存音频…
+	This speech engine can't save audio. Install espeak-ng.	此语音引擎无法保存音频。请安装 espeak-ng。
+	None of these pages has text to read. Recognize text (OCR) first.	这些页面都没有可朗读的文本。请先识别文本（OCR）。
+	Couldn't save audio: {e}	无法保存音频：{e}
+	Saved audio to {path}	音频已保存到{path}

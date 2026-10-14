@@ -2374,3 +2374,26 @@ animation effects	Off	Вимкнено
 	This document is trying to open a local file:	Цей документ намагається відкрити локальний файл:
 	Move tag earlier	Перемістити тег раніше
 	Move tag later	Перемістити тег пізніше
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Прочитати цю сторінку вголос
+	Read to end of document	Читати до кінця документа
+	Pause or resume reading	Призупинити або продовжити читання
+	Stop reading	Зупинити читання
+	Save as audio…	Зберегти як аудіо…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	У цій системі немає синтезатора мовлення. У Linux і FreeBSD установіть espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	На цій сторінці немає тексту для читання. Спершу розпізнайте текст (OCR).
+	Read Out Loud stopped: {e}	Читання вголос зупинено: {e}
+	Pause ({key})	Пауза ({key})
+	Resume ({key})	Продовжити ({key})
+	Stop reading ({key})	Зупинити читання ({key})
+	Reading page {n} of {total}	Читання сторінки {n} з {total}
+	Paused on page {n} of {total}	Пауза на сторінці {n} з {total}
+	Speed	Швидкість
+	Voice	Голос
+	System voice	Системний голос
+	Saving audio…	Збереження аудіо…
+	This speech engine can't save audio. Install espeak-ng.	Цей синтезатор мовлення не може зберігати аудіо. Установіть espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	На жодній із цих сторінок немає тексту для читання. Спершу розпізнайте текст (OCR).
+	Couldn't save audio: {e}	Не вдалося зберегти аудіо: {e}
+	Saved audio to {path}	Аудіо збережено в {path}

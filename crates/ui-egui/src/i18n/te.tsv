@@ -2265,3 +2265,26 @@ animation effects	Off	ఆఫ్
 	This document is trying to open a local file:	ఈ పత్రం ఒక స్థానిక ఫైల్‌ను తెరవడానికి ప్రయత్నిస్తోంది:
 	Move tag earlier	ట్యాగ్‌ను ముందుకు తరలించు
 	Move tag later	ట్యాగ్‌ను వెనుకకు తరలించు
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	ఈ పేజీని బిగ్గరగా చదువు
+	Read to end of document	పత్రం చివరి వరకు చదువు
+	Pause or resume reading	చదవడాన్ని పాజ్ చేయి లేదా కొనసాగించు
+	Stop reading	చదవడం ఆపు
+	Save as audio…	ఆడియోగా సేవ్ చేయి…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	ఈ సిస్టమ్‌లో స్పీచ్ ఇంజిన్ లేదు. Linux మరియు FreeBSDలో espeak-ng ఇన్‌స్టాల్ చేయండి.
+	This page has no text to read. Recognize text (OCR) first.	ఈ పేజీలో చదవడానికి టెక్స్ట్ లేదు. ముందుగా టెక్స్ట్‌ను గుర్తించండి (OCR).
+	Read Out Loud stopped: {e}	బిగ్గరగా చదవడం ఆగిపోయింది: {e}
+	Pause ({key})	పాజ్ ({key})
+	Resume ({key})	కొనసాగించు ({key})
+	Stop reading ({key})	చదవడం ఆపు ({key})
+	Reading page {n} of {total}	{total}లో పేజీ {n} చదువుతోంది
+	Paused on page {n} of {total}	{total}లో పేజీ {n} వద్ద పాజ్ చేయబడింది
+	Speed	వేగం
+	Voice	స్వరం
+	System voice	సిస్టమ్ స్వరం
+	Saving audio…	ఆడియోను సేవ్ చేస్తోంది…
+	This speech engine can't save audio. Install espeak-ng.	ఈ స్పీచ్ ఇంజిన్ ఆడియోను సేవ్ చేయలేదు. espeak-ng ఇన్‌స్టాల్ చేయండి.
+	None of these pages has text to read. Recognize text (OCR) first.	ఈ పేజీలలో దేనిలోనూ చదవడానికి టెక్స్ట్ లేదు. ముందుగా టెక్స్ట్‌ను గుర్తించండి (OCR).
+	Couldn't save audio: {e}	ఆడియోను సేవ్ చేయడం సాధ్యం కాలేదు: {e}
+	Saved audio to {path}	ఆడియో {path}లో సేవ్ చేయబడింది

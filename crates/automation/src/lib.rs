@@ -33,6 +33,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use pdfcraft_engine::{CombineSource, DocId, Document, Edit, Session, commands};
+use pdfcraft_platform::speech;
 use pdfcraft_platform::staging::{StagingName, create_staging, staging_suffixes};
 use pdfcraft_render::{PageRenderer, PageText, RenderConfig, RenderRequest, RequestKind};
 use serde_json::{Value, json};
@@ -662,6 +663,8 @@ impl Automation {
                 summary(self.session.get(new).ok_or_else(|| failed("the document vanished"))?)
             }
             "doc_export_images" | "doc_export_text" | "doc_export_all_images" => self.export(name, &a)?,
+            "doc_export_audio" => self.export_audio(&a)?,
+            "speech_voices" => speech_voices()?,
             "doc_header_footer" | "doc_watermark" | "doc_background" | "doc_remove_marks" => self.marks(name, &a)?,
             "doc_unprotect" => {
                 let mut out = self.apply(&a, Edit::RemoveProtection)?;
@@ -1169,6 +1172,62 @@ impl Automation {
             }
         };
         self.apply(a, edit)
+    }
+
+    /// Read Out Loud into a WAV file, with the system's speech engine.
+    fn export_audio(&mut self, a: &Args) -> Result<Value> {
+        let engine = speech::Engine::detect();
+        let name = engine.as_ref().map(speech::Engine::name);
+        self.export_audio_with(a, name, &mut |settings, chunks, out| match &engine {
+            Some(engine) => speech::record(engine, settings, chunks, out, &speech::Stopper::new()),
+            None => Err(speech::SpeechError::NoEngine),
+        })
+    }
+
+    /// [`Self::export_audio`] with `record` in place of the speech engine, which writes
+    /// `chunks` into the staging file it is given.
+    fn export_audio_with(
+        &mut self,
+        a: &Args,
+        engine: Option<&str>,
+        record: &mut impl FnMut(&speech::SpeechSettings, &[String], &Path) -> std::result::Result<(), speech::SpeechError>,
+    ) -> Result<Value> {
+        let doc = self.doc_to_copy(a)?;
+        let id = doc.id;
+        let pages = match a.opt_ints("pages")? {
+            Some(_) => self.pages(a, "pages")?,
+            None => (0..doc.info.pages.len()).collect(),
+        };
+        let path = self.resolve(a.str("path")?, true)?;
+        let rate = a.opt_num("rate")?.unwrap_or(1.0);
+        if !(f64::from(speech::MIN_RATE)..=f64::from(speech::MAX_RATE)).contains(&rate) {
+            return Err(ToolError::InvalidArgs(format!("rate {rate} is out of range ({}–{})", speech::MIN_RATE, speech::MAX_RATE)));
+        }
+        let settings = speech::SpeechSettings { voice: a.opt_str("voice")?.map(str::to_owned), rate: rate as f32, volume: 100 };
+        let texts = self.page_texts(id, &pages)?;
+        let mut chunks = Vec::new();
+        let mut without_text = Vec::new();
+        for (p, text) in pages.iter().zip(&texts) {
+            let page_chunks = speech::speech_chunks(&text.plain_text());
+            if page_chunks.is_empty() {
+                without_text.push(p + 1);
+            }
+            chunks.extend(page_chunks);
+        }
+        if chunks.is_empty() {
+            return Err(failed("these pages have no text to read; recognize text (OCR) first"));
+        }
+        // The engine writes the file itself, so it is given the staging file (closed first, so
+        // Windows lets it in) and the result is renamed over the target only when complete.
+        replace_atomic(&path, staging_suffixes(), |tmp, file| {
+            drop(file);
+            record(&settings, &chunks, tmp).map_err(failed)
+        })?;
+        let bytes = std::fs::metadata(&path).map(|m| m.len()).unwrap_or(0);
+        Ok(json!({
+            "path": path.to_string_lossy(), "pages": pages.len(), "chunks": chunks.len(), "bytes": bytes,
+            "engine": engine, "pages_without_text": without_text,
+        }))
     }
 
     fn export(&mut self, tool: &str, a: &Args) -> Result<Value> {
@@ -2301,6 +2360,16 @@ fn unused(dir: &Path, stem: &str) -> PathBuf {
     (2..10_000u32).map(|n| child(dir, &format!("{stem} ({n}).pdf"))).find(|p| !p.exists()).unwrap_or(first)
 }
 
+/// The system's speech engine and its voices (`speech_voices`).
+fn speech_voices() -> Result<Value> {
+    let Some(engine) = speech::Engine::detect() else {
+        return Ok(json!({ "engine": null, "can_record": false, "voices": [] }));
+    };
+    let voices = speech::voices(&engine).map_err(failed)?;
+    let voices: Vec<Value> = voices.iter().map(|v| json!({ "id": v.id, "name": v.name, "language": v.language })).collect();
+    Ok(json!({ "engine": engine.name(), "can_record": engine.can_record(), "voices": voices }))
+}
+
 /// Write via a temporary file in the same directory, then rename over the target.
 fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
     write_atomic_with(path, bytes, staging_suffixes())
@@ -2309,6 +2378,12 @@ fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
 /// [`write_atomic`], trying the staging names that `suffixes` give.
 fn write_atomic_with(path: &Path, bytes: &[u8], suffixes: impl IntoIterator<Item = u64>) -> Result<()> {
     use std::io::Write;
+    replace_atomic(path, suffixes, |tmp, mut file| file.write_all(bytes).map_err(|e| failed(format!("{}: {e}", tmp.display()))))
+}
+
+/// Replace `path` with what `fill` writes into a staging file beside it (handed over open, and
+/// closed when `fill` returns), renamed over the target only when `fill` succeeds.
+fn replace_atomic(path: &Path, suffixes: impl IntoIterator<Item = u64>, fill: impl FnOnce(&Path, std::fs::File) -> Result<()>) -> Result<()> {
     // A folder can't be replaced, and staging beside it could land outside the root: "." names
     // the root itself, whose parent isn't ours to write in.
     if path.is_dir() {
@@ -2319,14 +2394,9 @@ fn write_atomic_with(path: &Path, bytes: &[u8], suffixes: impl IntoIterator<Item
     std::fs::create_dir_all(dir).map_err(|e| failed(format!("{}: {e}", dir.display())))?;
     let (tmp, file) =
         create_staging(dir, &name.to_string_lossy(), StagingName::SuffixThenTag, suffixes).map_err(|e| failed(format!("{}: {e}", dir.display())))?;
-    // Closed at the end of the block, before the rename.
-    let written = {
-        let mut file = file;
-        file.write_all(bytes)
-    };
-    if let Err(e) = written {
+    if let Err(e) = fill(&tmp, file) {
         let _ = std::fs::remove_file(&tmp);
-        return Err(failed(format!("{}: {e}", tmp.display())));
+        return Err(e);
     }
     std::fs::rename(&tmp, path).map_err(|e| {
         let _ = std::fs::remove_file(&tmp);
@@ -2341,13 +2411,21 @@ mod tests {
 
     /// `n` pages, page i showing "Page i".
     fn numbered_pages(n: usize) -> Vec<u8> {
+        let texts: Vec<String> = (1..=n).map(|i| format!("Page {i}")).collect();
+        pages_showing(&texts.iter().map(String::as_str).collect::<Vec<_>>(), "24 Tf 20 150")
+    }
+
+    /// One page per entry, showing that text on one line in Helvetica at `at` ("size Tf x y"); an
+    /// empty entry is a blank page.
+    fn pages_showing(texts: &[&str], at: &str) -> Vec<u8> {
+        let n = texts.len();
         let mut objs: Vec<String> = vec!["<< /Type /Catalog /Pages 2 0 R >>".into()];
         let kids: Vec<String> = (0..n).map(|i| format!("{} 0 R", 4 + 2 * i)).collect();
         objs.push(format!("<< /Type /Pages /Kids [{}] /Count {n} /MediaBox [0 0 200 300] >>", kids.join(" ")));
         objs.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>".into());
-        for i in 0..n {
+        for (i, text) in texts.iter().enumerate() {
             objs.push(format!("<< /Type /Page /Parent 2 0 R /Contents {} 0 R /Resources << /Font << /F1 3 0 R >> >> >>", 5 + 2 * i));
-            let body = format!("BT /F1 24 Tf 20 150 Td (Page {}) Tj ET", i + 1);
+            let body = if text.is_empty() { String::new() } else { format!("BT /F1 {at} Td ({text}) Tj ET") };
             objs.push(format!("<< /Length {} >>\nstream\n{body}\nendstream", body.len()));
         }
         let mut out = b"%PDF-1.7\n".to_vec();
@@ -2732,6 +2810,101 @@ mod tests {
         #[allow(clippy::permissions_set_readonly_false)]
         perms.set_readonly(false);
         std::fs::set_permissions(&target, perms).unwrap();
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    type Recorded = Vec<(speech::SpeechSettings, Vec<String>, PathBuf)>;
+
+    /// A rooted session with a book open: two pages of text around a blank (scanned) page.
+    fn audio_book(test: &str) -> (Automation, DocId, PathBuf) {
+        let dir = staging_dir(&format!("audio-{test}"));
+        let mut a = Automation::new().with_root(&dir).unwrap();
+        let book = pages_showing(&["Call me Ishmael. Some years ago", "", "never mind how long."], "6 Tf 5 150");
+        let id = a.session.open("book.pdf", None, Arc::new(book), None).unwrap();
+        (a, id, dir)
+    }
+
+    /// Records what it is asked to, writing `RIFF` into the file it is given.
+    fn fake_recorder(
+        into: &mut Recorded,
+    ) -> impl FnMut(&speech::SpeechSettings, &[String], &Path) -> std::result::Result<(), speech::SpeechError> + '_ {
+        |settings, chunks, out| {
+            into.push((settings.clone(), chunks.to_vec(), out.to_path_buf()));
+            std::fs::write(out, b"RIFF").map_err(speech::SpeechError::Start)
+        }
+    }
+
+    #[test]
+    fn audio_export_reads_pages_in_order_into_a_staged_file() {
+        let (mut a, id, dir) = audio_book("order");
+        let mut recorded = Recorded::new();
+        let args = json!({ "doc": id.0, "path": "book.wav", "voice": "Zira", "rate": 1.5 });
+        let out = a.export_audio_with(&Args(&args), Some("Test speech"), &mut fake_recorder(&mut recorded)).unwrap();
+        assert_eq!(recorded.len(), 1);
+        let (settings, chunks, staged) = &recorded[0];
+        assert_eq!((settings.voice.as_deref(), settings.rate), (Some("Zira"), 1.5));
+        // Each page is read on its own: a sentence doesn't run on across a page break.
+        assert_eq!(chunks, &["Call me Ishmael.", "Some years ago", "never mind how long."]);
+        assert_ne!(staged, &dir.join("book.wav"), "the engine writes a staging file, not the target");
+        assert_eq!(std::fs::read(dir.join("book.wav")).unwrap(), b"RIFF");
+        assert_eq!(listing(&dir), ["book.wav"], "nothing else is left behind");
+        assert_eq!(out["pages"], 3);
+        assert_eq!(out["chunks"], 3);
+        assert_eq!(out["bytes"], 4);
+        assert_eq!(out["engine"], "Test speech");
+        assert_eq!(out["pages_without_text"], json!([2]));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn audio_export_stays_inside_the_root_and_never_starts_the_engine_outside_it() {
+        let (mut a, id, dir) = audio_book("confined");
+        let mut recorded = Recorded::new();
+        for path in ["../escape.wav", "/escape.wav", "sub/../../escape.wav"] {
+            let args = json!({ "doc": id.0, "path": path });
+            assert!(a.export_audio_with(&Args(&args), None, &mut fake_recorder(&mut recorded)).is_err(), "{path}");
+        }
+        assert!(recorded.is_empty(), "the engine never ran");
+        assert!(!dir.parent().unwrap().join("escape.wav").exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_failed_recording_leaves_the_target_and_folder_as_they_were() {
+        let (mut a, id, dir) = audio_book("failed");
+        std::fs::write(dir.join("book.wav"), "OLD").unwrap();
+        let args = json!({ "doc": id.0, "path": "book.wav" });
+        let mut fail = |_: &speech::SpeechSettings, _: &[String], out: &Path| {
+            std::fs::write(out, b"half a file").unwrap();
+            Err(speech::SpeechError::Failed("no voice".into()))
+        };
+        let e = a.export_audio_with(&Args(&args), None, &mut fail).unwrap_err();
+        assert!(e.to_string().contains("no voice"), "{e}");
+        assert_eq!(read(&dir.join("book.wav")), "OLD");
+        assert_eq!(listing(&dir), ["book.wav"], "the staging file was removed");
+        // No system engine: the same, with the reason.
+        let e = a.export_audio_with(&Args(&args), None, &mut |_, _, _| Err(speech::SpeechError::NoEngine)).unwrap_err();
+        assert!(e.to_string().contains("no speech engine"), "{e}");
+        assert_eq!(listing(&dir), ["book.wav"]);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn audio_export_refuses_bad_arguments_and_textless_pages_before_recording() {
+        let (mut a, id, dir) = audio_book("refused");
+        let mut recorded = Recorded::new();
+        for args in [
+            json!({ "doc": id.0, "path": "x.wav", "rate": 0.1 }),
+            json!({ "doc": id.0, "path": "x.wav", "rate": 9 }),
+            json!({ "doc": id.0, "path": "x.wav", "pages": [4] }),
+            json!({ "doc": id.0, "path": "x.wav", "pages": [2] }),
+        ] {
+            assert!(a.export_audio_with(&Args(&args), None, &mut fake_recorder(&mut recorded)).is_err(), "{args}");
+        }
+        assert!(recorded.is_empty());
+        let e = a.export_audio_with(&Args(&json!({ "doc": id.0, "path": "x.wav", "pages": [2] })), None, &mut fake_recorder(&mut recorded));
+        assert!(e.unwrap_err().to_string().contains("no text to read"));
+        assert_eq!(listing(&dir), Vec::<String>::new());
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

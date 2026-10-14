@@ -217,6 +217,13 @@ pub const COMMANDS: &[CommandSpec] = &[
     c("view.full_screen", "Full screen mode", VIEW, Some(Shortcut::cmd("L")), Document, "maximize"),
     c("view.read_mode", "Read mode", VIEW, Some(Shortcut { command: true, shift: false, mac_ctrl: true, key: "H" }), Document, "book-open"),
     c("view.focus_page_input", "Go to page…", VIEW, Some(Shortcut::cmd_shift("N")), Document, "text-cursor-input"),
+    // Read Out Loud. Acrobat's ⇧⌘B and ⇧⌘E are kept; its ⇧⌘V and ⇧⌘C arrive as Paste and Copy
+    // (egui-winit turns any ⌘V and ⌘C into those), so pausing takes ⇧⌘Y and reading one page has
+    // no key. Reading needs no copy permission: assistive technology may read (§7.6.4.2).
+    ct("view.read_aloud.page", "Read this page aloud", VIEW, None, Document, "volume-2"),
+    ct("view.read_aloud.to_end", "Read to end of document", VIEW, Some(Shortcut::cmd_shift("B")), Document, "volume-2"),
+    ct("view.read_aloud.pause", "Pause or resume reading", VIEW, Some(Shortcut::cmd_shift("Y")), Document, "pause"),
+    ct("view.read_aloud.stop", "Stop reading", VIEW, Some(Shortcut::cmd_shift("E")), Document, "square"),
     c("ui.dock.reset", "Reset panel layout", VIEW, None, Nothing, "settings"),
     c("view.theme", "Switch light / dark theme", None, None, Nothing, "moon"),
     c("view.theme.system", "Use system setting", None, None, Nothing, "settings"),
@@ -310,6 +317,7 @@ pub const COMMANDS: &[CommandSpec] = &[
     c("optimize.reduce", "Reduce file size…", FILE, None, Document, "file-down"),
     c("optimize.advanced", "Optimize PDF…", FILE, None, Document, "settings-2"),
     c("export.text", "Export to text…", FILE, None, Copying, "type"),
+    c("export.audio", "Save as audio…", FILE, None, Copying, "volume-2"),
     c("export.docx", "Export to Word…", FILE, None, Copying, "file-text"),
     c("export.pptx", "Export to PowerPoint…", FILE, None, Copying, "presentation"),
     c("export.html", "Export to HTML…", FILE, None, Copying, "file-symlink"),

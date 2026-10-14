@@ -2350,3 +2350,26 @@ animation effects	Off	Өшірулі
 	This document is trying to open a local file:	Бұл құжат жергілікті файлды ашуға әрекеттеніп жатыр:
 	Move tag earlier	Тегті ертерек жылжыту
 	Move tag later	Тегті кейінірек жылжыту
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Осы бетті дауыстап оқу
+	Read to end of document	Құжаттың соңына дейін оқу
+	Pause or resume reading	Оқуды кідірту немесе жалғастыру
+	Stop reading	Оқуды тоқтату
+	Save as audio…	Аудио ретінде сақтау…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Бұл жүйеде сөйлеу қозғалтқышы жоқ. Linux және FreeBSD жүйелерінде espeak-ng орнатыңыз.
+	This page has no text to read. Recognize text (OCR) first.	Бұл бетте оқитын мәтін жоқ. Алдымен мәтінді таныңыз (OCR).
+	Read Out Loud stopped: {e}	Дауыстап оқу тоқтатылды: {e}
+	Pause ({key})	Кідірту ({key})
+	Resume ({key})	Жалғастыру ({key})
+	Stop reading ({key})	Оқуды тоқтату ({key})
+	Reading page {n} of {total}	{total} беттің {n}-беті оқылуда
+	Paused on page {n} of {total}	{total} беттің {n}-бетінде кідіртілді
+	Speed	Жылдамдық
+	Voice	Дауыс
+	System voice	Жүйе дауысы
+	Saving audio…	Аудио сақталуда…
+	This speech engine can't save audio. Install espeak-ng.	Бұл сөйлеу қозғалтқышы аудионы сақтай алмайды. espeak-ng орнатыңыз.
+	None of these pages has text to read. Recognize text (OCR) first.	Бұл беттердің ешқайсысында оқитын мәтін жоқ. Алдымен мәтінді таныңыз (OCR).
+	Couldn't save audio: {e}	Аудионы сақтау мүмкін болмады: {e}
+	Saved audio to {path}	Аудио {path} жолына сақталды

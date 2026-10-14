@@ -2351,3 +2351,26 @@ animation effects	Off	Ki
 	This document is trying to open a local file:	Ez a dokumentum egy helyi fájlt próbál megnyitni:
 	Move tag earlier	Címke korábbra helyezése
 	Move tag later	Címke későbbre helyezése
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Az oldal felolvasása
+	Read to end of document	Felolvasás a dokumentum végéig
+	Pause or resume reading	Felolvasás szüneteltetése vagy folytatása
+	Stop reading	Felolvasás leállítása
+	Save as audio…	Mentés hangként…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Ezen a rendszeren nincs beszédszintetizátor. Linuxon és FreeBSD-n telepítsd az espeak-ng-t.
+	This page has no text to read. Recognize text (OCR) first.	Ezen az oldalon nincs felolvasható szöveg. Előbb futtass szövegfelismerést (OCR).
+	Read Out Loud stopped: {e}	A felolvasás leállt: {e}
+	Pause ({key})	Szünet ({key})
+	Resume ({key})	Folytatás ({key})
+	Stop reading ({key})	Felolvasás leállítása ({key})
+	Reading page {n} of {total}	{n}. oldal felolvasása, összesen {total}
+	Paused on page {n} of {total}	Szüneteltetve: {n}. oldal, összesen {total}
+	Speed	Sebesség
+	Voice	Hang
+	System voice	Rendszerhang
+	Saving audio…	Hang mentése…
+	This speech engine can't save audio. Install espeak-ng.	Ez a beszédszintetizátor nem tud hangot menteni. Telepítsd az espeak-ng-t.
+	None of these pages has text to read. Recognize text (OCR) first.	Ezen oldalak egyikén sincs felolvasható szöveg. Előbb futtass szövegfelismerést (OCR).
+	Couldn't save audio: {e}	Nem sikerült menteni a hangot: {e}
+	Saved audio to {path}	Hang mentve ide: {path}

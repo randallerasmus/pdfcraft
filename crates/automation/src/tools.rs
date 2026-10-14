@@ -1082,6 +1082,20 @@ pub fn tools() -> Vec<ToolDef> {
         t("doc_export_text", "Export text", "Write the reading-order text of pages to a .txt file (pages separated by form feeds).")
             .cmd("export.text")
             .with(schema(json!({ "doc": doc(), "path": { "type": "string" }, "pages": pages("to export (default: all)") }), &["doc", "path"])),
+        t("doc_export_audio", "Save as audio", "Read pages aloud into a WAV file with the system's speech engine (Windows speech, macOS say, or eSpeak NG on Linux and FreeBSD), as Read Out Loud would read them: in reading order, a sentence at a time. Needs the document's permission to copy content. Pages without text (scans) are listed in pages_without_text; recognize text (OCR) first to include them. Can take as long as reading the pages aloud; Speech Dispatcher can't record.")
+            .cmd("export.audio")
+            .with(schema(
+                json!({
+                    "doc": doc(), "path": { "type": "string", "description": "The WAV file to write." },
+                    "pages": pages("to read (default: all)"),
+                    "voice": { "type": "string", "description": "A voice id from speech_voices (default: the system's voice)." },
+                    "rate": { "type": "number", "minimum": 0.5, "maximum": 3.0, "description": "Speed as a multiple of normal (default 1)." }
+                }),
+                &["doc", "path"],
+            )),
+        t("speech_voices", "List speech voices", "The system speech engine Read Out Loud and doc_export_audio use (null when there is none), whether it can save audio, and its voices.")
+            .ro()
+            .with(schema(json!({}), &[])),
         t(
             "fill_sign_add",
             "Fill & Sign: type text or place a mark",

@@ -2357,3 +2357,26 @@ animation effects	Off	Izklopljeni
 	This document is trying to open a local file:	Ta dokument poskuša odpreti lokalno datoteko:
 	Move tag earlier	Premakni oznako prej
 	Move tag later	Premakni oznako pozneje
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Preberi to stran na glas
+	Read to end of document	Beri do konca dokumenta
+	Pause or resume reading	Začasno ustavi ali nadaljuj branje
+	Stop reading	Ustavi branje
+	Save as audio…	Shrani kot zvok…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Ta sistem nima govornega pogona. V sistemih Linux in FreeBSD namestite espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Ta stran nima besedila za branje. Najprej prepoznajte besedilo (OCR).
+	Read Out Loud stopped: {e}	Branje na glas se je ustavilo: {e}
+	Pause ({key})	Začasno ustavi ({key})
+	Resume ({key})	Nadaljuj ({key})
+	Stop reading ({key})	Ustavi branje ({key})
+	Reading page {n} of {total}	Branje strani {n} od {total}
+	Paused on page {n} of {total}	Začasno ustavljeno na strani {n} od {total}
+	Speed	Hitrost
+	Voice	Glas
+	System voice	Sistemski glas
+	Saving audio…	Shranjevanje zvoka…
+	This speech engine can't save audio. Install espeak-ng.	Ta govorni pogon ne more shraniti zvoka. Namestite espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Nobena od teh strani nima besedila za branje. Najprej prepoznajte besedilo (OCR).
+	Couldn't save audio: {e}	Zvoka ni bilo mogoče shraniti: {e}
+	Saved audio to {path}	Zvok je shranjen v {path}

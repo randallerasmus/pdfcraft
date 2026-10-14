@@ -2315,3 +2315,26 @@ animation effects	Off	Изключени
 	This document is trying to open a local file:	Този документ се опитва да отвори локален файл:
 	Move tag earlier	Преместване на етикета по-рано
 	Move tag later	Преместване на етикета по-късно
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Прочети тази страница на глас
+	Read to end of document	Чети до края на документа
+	Pause or resume reading	Пауза или продължаване на четенето
+	Stop reading	Спри четенето
+	Save as audio…	Запази като аудио…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Тази система няма синтезатор на реч. В Linux и FreeBSD инсталирай espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Тази страница няма текст за четене. Първо разпознай текста (OCR).
+	Read Out Loud stopped: {e}	Четенето на глас е спряно: {e}
+	Pause ({key})	Пауза ({key})
+	Resume ({key})	Продължи ({key})
+	Stop reading ({key})	Спри четенето ({key})
+	Reading page {n} of {total}	Четене на страница {n} от {total}
+	Paused on page {n} of {total}	Пауза на страница {n} от {total}
+	Speed	Скорост
+	Voice	Глас
+	System voice	Системен глас
+	Saving audio…	Аудиото се запазва…
+	This speech engine can't save audio. Install espeak-ng.	Този синтезатор на реч не може да запазва аудио. Инсталирай espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Никоя от тези страници няма текст за четене. Първо разпознай текста (OCR).
+	Couldn't save audio: {e}	Аудиото не можа да се запази: {e}
+	Saved audio to {path}	Аудиото е запазено в {path}

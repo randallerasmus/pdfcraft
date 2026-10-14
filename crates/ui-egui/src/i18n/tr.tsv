@@ -2348,3 +2348,26 @@ animation effects	Off	Kapalı
 	This document is trying to open a local file:	Bu belge yerel bir dosya açmaya çalışıyor:
 	Move tag earlier	Etiketi daha erken taşı
 	Move tag later	Etiketi daha geç taşı
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Bu sayfayı sesli oku
+	Read to end of document	Belgenin sonuna kadar oku
+	Pause or resume reading	Okumayı duraklat veya sürdür
+	Stop reading	Okumayı durdur
+	Save as audio…	Ses olarak kaydet…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Bu sistemde konuşma motoru yok. Linux ve FreeBSD'de espeak-ng'yi yükleyin.
+	This page has no text to read. Recognize text (OCR) first.	Bu sayfada okunacak metin yok. Önce metni tanıyın (OCR).
+	Read Out Loud stopped: {e}	Sesli okuma durdu: {e}
+	Pause ({key})	Duraklat ({key})
+	Resume ({key})	Sürdür ({key})
+	Stop reading ({key})	Okumayı durdur ({key})
+	Reading page {n} of {total}	Sayfa {n} / {total} okunuyor
+	Paused on page {n} of {total}	Sayfa {n} / {total} üzerinde duraklatıldı
+	Speed	Hız
+	Voice	Ses
+	System voice	Sistem sesi
+	Saving audio…	Ses kaydediliyor…
+	This speech engine can't save audio. Install espeak-ng.	Bu konuşma motoru ses kaydedemiyor. espeak-ng'yi yükleyin.
+	None of these pages has text to read. Recognize text (OCR) first.	Bu sayfaların hiçbirinde okunacak metin yok. Önce metni tanıyın (OCR).
+	Couldn't save audio: {e}	Ses kaydedilemedi: {e}
+	Saved audio to {path}	Ses {path} konumuna kaydedildi

@@ -2482,3 +2482,26 @@ animation effects	Off	Desactivados
 	This document is trying to open a local file:	Este documento intenta abrir un archivo local:
 	Move tag earlier	Mover etiqueta antes
 	Move tag later	Mover etiqueta después
+
+# Read Out Loud and Save as audio (View and File menus, the reading bar).
+	Read this page aloud	Leer esta página en voz alta
+	Read to end of document	Leer hasta el final del documento
+	Pause or resume reading	Pausar o reanudar la lectura
+	Stop reading	Detener la lectura
+	Save as audio…	Guardar como audio…
+	This system has no speech engine. On Linux and FreeBSD, install espeak-ng.	Este sistema no tiene motor de voz. En Linux y FreeBSD, instala espeak-ng.
+	This page has no text to read. Recognize text (OCR) first.	Esta página no tiene texto que leer. Reconoce el texto (OCR) primero.
+	Read Out Loud stopped: {e}	La lectura en voz alta se detuvo: {e}
+	Pause ({key})	Pausar ({key})
+	Resume ({key})	Reanudar ({key})
+	Stop reading ({key})	Detener la lectura ({key})
+	Reading page {n} of {total}	Leyendo la página {n} de {total}
+	Paused on page {n} of {total}	En pausa en la página {n} de {total}
+	Speed	Velocidad
+	Voice	Voz
+	System voice	Voz del sistema
+	Saving audio…	Guardando audio…
+	This speech engine can't save audio. Install espeak-ng.	Este motor de voz no puede guardar audio. Instala espeak-ng.
+	None of these pages has text to read. Recognize text (OCR) first.	Ninguna de estas páginas tiene texto que leer. Reconoce el texto (OCR) primero.
+	Couldn't save audio: {e}	No se pudo guardar el audio: {e}
+	Saved audio to {path}	Audio guardado en {path}

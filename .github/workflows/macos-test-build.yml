@@ -1,0 +1,33 @@
+name: macOS test build
+
+# Builds an ad-hoc signed PdfCraft DMG for hands-on testing and attaches it to the run as an
+# artifact (no release is published). Test-only: drop this file before opening a PR.
+on:
+  push:
+    branches: [feat/read-aloud]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # stable
+        with:
+          toolchain: stable
+          targets: aarch64-apple-darwin
+
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+
+      - name: Build the DMG
+        run: packaging/macos/package.sh --arch aarch64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdfcraft-macos-aarch64
+          path: dist/release/*.dmg
+          if-no-files-found: error

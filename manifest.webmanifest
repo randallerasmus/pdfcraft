@@ -1,0 +1,13 @@
+{
+  "name": "PdfCraft",
+  "short_name": "PdfCraft",
+  "description": "Read, edit and sign PDFs, and have them read aloud.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f1f1f3",
+  "theme_color": "#12a58a",
+  "icons": [
+    { "src": "ai.storyteller.pdfcraft.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
